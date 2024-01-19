@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <style>
+      .aktif span {
+        background-color: blue;
+      }      
+      .ekstra span::after {
+        content: " Ekstra içerik";
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <!-- burda true ise class blue olarak eklenir. false ise eklenmez-->
+      <div v-bind:class="{red: false, blue:true}"></div>
+      <!-- v-bind, Vue.js'te HTML öğelerine değişken değerler eklemek için kullanılan bir araçtır. -->
+
+      <div v-bind:class="{aktif:aktiflik}" v-on:click="aktiflik = !aktiflik">
+        <span>BU ALAN İÇERİĞİDİR</span>
+      </div>
+
+      <button v-on:click="ekstra = !ekstra">Ekstrayı değiştir</button>
+      <button v-on:click="aktiflik = !aktiflik">Aktifliği değiştir</button>
+
+      <div v-bind:class="degisikligiAlgila"> <!-- computed ile yaptık -->
+        <span>BU İÇERİK</span>
+      </div>
+    </div>
+
+    <script>
+      const { createApp } = Vue;
+      createApp({
+        data() {
+          return {
+            aktiflik: false,
+            ekstra: false,
+          };
+        },
+        computed: {
+          degisikligiAlgila: function () {
+            return {
+                aktif: this.aktiflik,
+                ekstra: this.ekstra
+            };
+          },
+        },
+      }).mount("#app");
+    </script>
+  </body>
+</html>
